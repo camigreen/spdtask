@@ -8,6 +8,7 @@ router.get('/tasks', function (req, res, next) {
 });
 
 router.get('/doors', function (req, res, next) {
+	var doors = "";
 	http.get('http://10.10.3.31:18779/Infinias/ia/doors/status?username=dispatch1&password=1234', (res) => {
 	  const { statusCode } = res;
 	  const contentType = res.headers['content-type'];
@@ -34,7 +35,7 @@ router.get('/doors', function (req, res, next) {
 	    try {
 	      const parsedData = JSON.parse(rawData);
 	      console.log(parsedData);
-	      res.send(parsedData);
+	      doors = parsedData;
 	    } catch (e) {
 	      console.error(e.message);
 	    }
@@ -42,6 +43,7 @@ router.get('/doors', function (req, res, next) {
 	}).on('error', (e) => {
 	  console.error(`Got error: ${e.message}`);
 	});
+	res.send(doors);
 });
 
 module.exports = router;
