@@ -1,49 +1,129 @@
 var express = require('express');
 var router = express.Router();
 var http = require('http');
+var request = require('request');
+
+var host = '10.10.3.31';
+var port = '18779';
+var username = 'dispatch1';
+var password = '1234'
 
 router.get('/tasks', function (req, res, next) {
-	http.get('http://10.10.3.31:18779/Infinias/IA/Doors')
 	res.send('TASK API');
 });
 
 router.get('/doors', function (req, res, next) {
-	var doors = "";
-	http.get('http://10.10.3.31:18779/Infinias/ia/doors/status?username=dispatch1&password=1234', (res) => {
-	  const { statusCode } = res;
-	  const contentType = res.headers['content-type'];
 
-	  let error;
-	  if (statusCode !== 200) {
-	    error = new Error('Request Failed.\n' +
-	                      `Status Code: ${statusCode}`);
-	  } else if (!/^application\/json/.test(contentType)) {
-	    error = new Error('Invalid content-type.\n' +
-	                      `Expected application/json but received ${contentType}`);
-	  }
-	  if (error) {
-	    console.error(error.message);
-	    // Consume response data to free up memory
-	    res.resume();
-	    return;
-	  }
-
-	  res.setEncoding('utf8');
-	  let rawData = '';
-	  res.on('data', (chunk) => { rawData += chunk; });
-	  res.on('end', () => {
-	    try {
-	      const parsedData = JSON.parse(rawData);
-	      console.log(parsedData);
-	      doors = parsedData;
-	    } catch (e) {
-	      console.error(e.message);
-	    }
-	  });
-	}).on('error', (e) => {
-	  console.error(`Got error: ${e.message}`);
+	var options = {
+		'method': 'GET',
+		'url': 'http://10.10.3.31:18779/Infinias/IA/Doors/status?username='+username+'&password='+password
+	};
+	request(options, function (error, response) { 
+		if (error) throw new Error(error);
+		res.send(JSON.parse(response.body));
 	});
-	res.send(doors);
+	
+	
+});
+
+
+// Get Single Door
+router.get('/doors/:id', function (req, res, next) {
+
+	var options = {
+	  'method': 'GET',
+	  'url': 'http://10.10.3.31:18779/Infinias/IA/Doors?doorids='+req.params.id+'&username='+username+'&password='+password
+	};
+	request(options, function (error, response) { 
+	  if (error) throw new Error(error);
+	  console.log(response.body);
+	  res.send(JSON.parse(response.body));
+	});
+	
+});
+
+// Open a Single Door
+router.get('/doors/:id/open', function (req, res, next) {
+
+	var options = {
+	  'method': 'PUT',
+	  'url': 'http://10.10.3.31:18779/Infinias/IA/Doors',
+	  'headers': {
+	    'Content-Type': 'application/x-www-form-urlencoded'
+	  },
+	  form: {
+	    'username': 'dispatch1',
+	    'password': '1234',
+	    'doorids': req.params.id,
+	    'LockStatus': 'Unlocked',
+	    'duration': '10'
+	  }
+	};
+	request(options, function (error, response) { 
+	  if (error) throw new Error(error);
+	  res.send(JSON.parse(response.body));
+	});
+	
+});
+
+// Open a Single Door
+router.get('/gates/open', function (req, res, next) {
+
+	var options = {
+	  'method': 'PUT',
+	  'url': 'http://10.10.3.31:18779/Infinias/IA/Doors',
+	  'headers': {
+	    'Content-Type': 'application/x-www-form-urlencoded'
+	  },
+	  form: {
+	    'username': 'dispatch1',
+	    'password': '1234',
+	    'doorids': '17,66',
+	    'LockStatus': 'Unlocked'
+	  }
+	};
+	request(options, function (error, response) { 
+	  if (error) throw new Error(error);
+	  res.send(JSON.parse(response.body));
+	});
+	
+});
+
+// Open a Single Door
+router.get('/gates/close', function (req, res, next) {
+
+	var options = {
+	  'method': 'PUT',
+	  'url': 'http://10.10.3.31:18779/Infinias/IA/Doors',
+	  'headers': {
+	    'Content-Type': 'application/x-www-form-urlencoded'
+	  },
+	  form: {
+	    'username': 'dispatch1',
+	    'password': '1234',
+	    'doorids': '17,66',
+	    'LockStatus': 'Normal'
+	  }
+	};
+	request(options, function (error, response) { 
+	  if (error) throw new Error(error);
+	  res.send(JSON.parse(response.body));
+	});
+	
+});
+
+// Open a Single Door
+router.get('/zones', function (req, res, next) {
+
+	var options = {
+	  'method': 'GET',
+	  'url': 'http://10.10.3.31:18779/Infinias/IA/zones/Names/Values?username='+username+'&password='+password
+	};
+	request(options, function (error, response) { 
+	  if (error) throw new Error(error);
+	  res.send(JSON.parse(response.body));
+	});
+	
 });
 
 module.exports = router;
