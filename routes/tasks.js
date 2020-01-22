@@ -34,6 +34,7 @@ router.get('/doors', function (req, res, next) {
 	    try {
 	      const parsedData = JSON.parse(rawData);
 	      console.log(parsedData);
+	      res.send(parsedData);
 	    } catch (e) {
 	      console.error(e.message);
 	    }
