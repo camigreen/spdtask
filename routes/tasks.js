@@ -8,7 +8,7 @@ router.get('/tasks', function (req, res, next) {
 });
 
 router.get('/doors', function (req, res, next) {
-	http.get('http://nodejs.org/dist/index.json', (res) => {
+	http.get('http://10.10.3.31:18779/Infinias/ia/doors/status?username=dispatch1&password=1234', (res) => {
 	  const { statusCode } = res;
 	  const contentType = res.headers['content-type'];
 
