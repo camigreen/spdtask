@@ -8,6 +8,12 @@ var port = '18779';
 var username = 'dispatch1';
 var password = '1234'
 
+function send(res, data) {
+	res.setHeader("Access-Control-Allow-Origin", "*");
+	res.setHeader("Cache-Control", "no-cache");
+	res.send(data);
+}
+
 router.get('/tasks', function (req, res, next) {
 	res.send('TASK API');
 });
@@ -16,11 +22,20 @@ router.get('/doors', function (req, res, next) {
 
 	var options = {
 		'method': 'GET',
-		'url': 'http://10.10.3.31:18779/Infinias/IA/Doors/status?username='+username+'&password='+password
+		'url': 'http://10.10.3.31:18779/Infinias/IA/Doors/status?username='+username+'&password='+password,
+		'headers': {
+			'Cache-Control': 'no-cache'
+		}
 	};
 	request(options, function (error, response) { 
 		if (error) throw new Error(error);
-		res.send(JSON.parse(response.body));
+		var doors = [];
+		for(let door of JSON.parse(response.body).Values) {
+			if(door.Id == 17 || door.Id == 66) {
+				doors.push(door);
+			}
+		}
+		send(res, doors);
 	});
 	
 	
@@ -29,22 +44,24 @@ router.get('/doors', function (req, res, next) {
 
 // Get Single Door
 router.get('/doors/:id', function (req, res, next) {
-
+	
 	var options = {
-	  'method': 'GET',
-	  'url': 'http://10.10.3.31:18779/Infinias/IA/Doors?doorids='+req.params.id+'&username='+username+'&password='+password
+	  	'method': 'GET',
+	  	'url': 'http://10.10.3.31:18779/Infinias/IA/Doors?doorids='+req.params.id+'&username='+username+'&password='+password,
+	  	'headers': {
+			'Cache-Control': 'no-cache'
+		}
 	};
 	request(options, function (error, response) { 
 	  if (error) throw new Error(error);
-	  console.log(response.body);
-	  res.send(JSON.parse(response.body));
+	  send(res, JSON.parse(response.body));
 	});
 	
 });
 
 // Open a Single Door
 router.get('/doors/:id/open', function (req, res, next) {
-
+	console.log('Opening Door '+req.params.id);
 	var options = {
 	  'method': 'PUT',
 	  'url': 'http://10.10.3.31:18779/Infinias/IA/Doors',
