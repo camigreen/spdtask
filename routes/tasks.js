@@ -29,13 +29,7 @@ router.get('/doors', function (req, res, next) {
 	};
 	request(options, function (error, response) { 
 		if (error) throw new Error(error);
-		var doors = [];
-		for(let door of JSON.parse(response.body).Values) {
-			if(door.Id == 17 || door.Id == 66) {
-				doors.push(door);
-			}
-		}
-		send(res, doors);
+		send(res,  JSON.parse(response.body));
 	});
 	
 	
