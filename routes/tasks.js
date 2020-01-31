@@ -54,7 +54,7 @@ router.get('/doors/:id', function (req, res, next) {
 });
 
 // Open a Single Door
-router.get('/doors/:id/open', function (req, res, next) {
+router.get('/doors/:ids/open', function (req, res, next) {
 	console.log('Opening Door '+req.params.id);
 	var options = {
 	  'method': 'PUT',
@@ -65,21 +65,21 @@ router.get('/doors/:id/open', function (req, res, next) {
 	  form: {
 	    'username': 'dispatch1',
 	    'password': '1234',
-	    'doorids': req.params.id,
+	    'doorids': req.params.ids,
 	    'LockStatus': 'Unlocked',
 	    'duration': '10'
 	  }
 	};
 	request(options, function (error, response) { 
 	  if (error) throw new Error(error);
-	  res.send(JSON.parse(response.body));
+	  send(res, JSON.parse(response.body));
 	});
 	
 });
 
-// Open a Single Door
-router.get('/gates/open', function (req, res, next) {
-
+// Close a Single Door
+router.get('/doors/:ids/close', function (req, res, next) {
+	console.log('Closing Door '+req.params.ids);
 	var options = {
 	  'method': 'PUT',
 	  'url': 'http://10.10.3.31:18779/Infinias/IA/Doors',
@@ -89,50 +89,36 @@ router.get('/gates/open', function (req, res, next) {
 	  form: {
 	    'username': 'dispatch1',
 	    'password': '1234',
-	    'doorids': '17,66',
-	    'LockStatus': 'Unlocked'
-	  }
-	};
-	request(options, function (error, response) { 
-	  if (error) throw new Error(error);
-	  res.send(JSON.parse(response.body));
-	});
-	
-});
-
-// Open a Single Door
-router.get('/gates/close', function (req, res, next) {
-
-	var options = {
-	  'method': 'PUT',
-	  'url': 'http://10.10.3.31:18779/Infinias/IA/Doors',
-	  'headers': {
-	    'Content-Type': 'application/x-www-form-urlencoded'
-	  },
-	  form: {
-	    'username': 'dispatch1',
-	    'password': '1234',
-	    'doorids': '17,66',
+	    'doorids': req.params.ids,
 	    'LockStatus': 'Normal'
 	  }
 	};
 	request(options, function (error, response) { 
 	  if (error) throw new Error(error);
-	  res.send(JSON.parse(response.body));
+	  send(res, JSON.parse(response.body));
 	});
 	
 });
 
-// Open a Single Door
-router.get('/zones', function (req, res, next) {
-
+// Unlock a Single Door
+router.get('/doors/:ids/unlock', function (req, res, next) {
+	console.log('Closing Door '+req.params.id);
 	var options = {
-	  'method': 'GET',
-	  'url': 'http://10.10.3.31:18779/Infinias/IA/zones/Names/Values?username='+username+'&password='+password
+	  'method': 'PUT',
+	  'url': 'http://10.10.3.31:18779/Infinias/IA/Doors',
+	  'headers': {
+	    'Content-Type': 'application/x-www-form-urlencoded'
+	  },
+	  form: {
+	    'username': 'dispatch1',
+	    'password': '1234',
+	    'doorids': '16,17',
+	    'LockStatus': 'Unlocked'
+	  }
 	};
 	request(options, function (error, response) { 
 	  if (error) throw new Error(error);
-	  res.send(JSON.parse(response.body));
+	  send(res, JSON.parse(response.body));
 	});
 	
 });

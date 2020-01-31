@@ -27,3 +27,15 @@ app.use('/api', tasks);
 app.listen(port, function () {
 	console.log('Server Started on Port '+ port);
 });
+
+// Rtsp Stream
+// Stream = require('node-rtsp-stream');
+// stream = new Stream({
+//   name: 'name',
+//   streamUrl: 'rtsp://192.168.0.64:8554/camera/0/33',
+//   wsPort: 9999,
+//   ffmpegOptions: { // options ffmpeg flags
+// 	'-stats': '', // an option with no neccessary value uses a blank string
+// 	'-r': 30 // options with required values specify the value after the key
+//   }
+// });
