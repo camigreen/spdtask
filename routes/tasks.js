@@ -53,7 +53,7 @@ router.get('/doors/:id', function (req, res, next) {
 	
 });
 
-// Open a Single Door
+// Open a Single Door or multiple doors
 router.put('/doors/open', function (req, res, next) {
 	console.log(req.body);
 	var options = {
@@ -77,9 +77,9 @@ router.put('/doors/open', function (req, res, next) {
 	
 });
 
-// Close a Single Door
+// Close a Single Door or multiple doors
 router.put('/doors/close', function (req, res, next) {
-	console.log('Closing Door '+req.params.ids);
+	console.log(req.body);
 	var options = {
 	  'method': 'PUT',
 	  'url': 'http://10.10.3.31:18779/Infinias/IA/Doors',
@@ -89,7 +89,7 @@ router.put('/doors/close', function (req, res, next) {
 	  form: {
 	    'username': 'dispatch1',
 	    'password': '1234',
-	    'doorids': req.params.doorids,
+	    'doorids': req.body.doorids,
 	    'LockStatus': 'Normal'
 	  }
 	};
