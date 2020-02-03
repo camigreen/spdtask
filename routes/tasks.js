@@ -65,7 +65,7 @@ router.get('/doors/:ids/open', function (req, res, next) {
 	  form: {
 	    'username': 'dispatch1',
 	    'password': '1234',
-	    'doorids': req.params.ids,
+	    'doorids': '17,66',
 	    'LockStatus': 'Unlocked',
 	    'duration': '10'
 	  }
