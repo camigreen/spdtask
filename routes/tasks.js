@@ -11,7 +11,7 @@ var password = '1234'
 router.use(function(req, res, next) {
 	res.setHeader("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
 	res.setHeader("Access-Control-Allow-Origin", "*");
-	res.setHeader("Access-Control-Allow-Headers", "*");
+	res.setHeader("Access-Control-Allow-Headers", "content-type");
 	res.setHeader("Cache-Control", "no-cache");
 	next();
 })
