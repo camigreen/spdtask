@@ -101,8 +101,8 @@ router.get('/doors/:ids/close', function (req, res, next) {
 });
 
 // Unlock a Single Door
-router.get('/doors/:ids/unlock', function (req, res, next) {
-	console.log('Closing Door '+req.params.id);
+router.put('/doors/unlock', function (req, res, next) {
+	console.log(req.params);
 	var options = {
 	  'method': 'PUT',
 	  'url': 'http://10.10.3.31:18779/Infinias/IA/Doors',
