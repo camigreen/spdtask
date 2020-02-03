@@ -54,54 +54,7 @@ router.get('/doors/:id', function (req, res, next) {
 });
 
 // Open a Single Door
-router.get('/doors/:ids/open', function (req, res, next) {
-	console.log('Opening Door '+req.params.id);
-	var options = {
-	  'method': 'PUT',
-	  'url': 'http://10.10.3.31:18779/Infinias/IA/Doors',
-	  'headers': {
-	    'Content-Type': 'application/x-www-form-urlencoded'
-	  },
-	  form: {
-	    'username': 'dispatch1',
-	    'password': '1234',
-	    'doorids': '17,66',
-	    'LockStatus': 'Unlocked',
-	    'duration': '10'
-	  }
-	};
-	request(options, function (error, response) { 
-	  if (error) throw new Error(error);
-	  send(res, JSON.parse(response.body));
-	});
-	
-});
-
-// Close a Single Door
-router.get('/doors/:ids/close', function (req, res, next) {
-	console.log('Closing Door '+req.params.ids);
-	var options = {
-	  'method': 'PUT',
-	  'url': 'http://10.10.3.31:18779/Infinias/IA/Doors',
-	  'headers': {
-	    'Content-Type': 'application/x-www-form-urlencoded'
-	  },
-	  form: {
-	    'username': 'dispatch1',
-	    'password': '1234',
-	    'doorids': req.params.ids,
-	    'LockStatus': 'Normal'
-	  }
-	};
-	request(options, function (error, response) { 
-	  if (error) throw new Error(error);
-	  send(res, JSON.parse(response.body));
-	});
-	
-});
-
-// Unlock a Single Door
-router.put('/doors/unlock', function (req, res, next) {
+router.put('/doors/open', function (req, res, next) {
 	console.log(req.body);
 	var options = {
 	  'method': 'PUT',
@@ -113,7 +66,31 @@ router.put('/doors/unlock', function (req, res, next) {
 	    'username': 'dispatch1',
 	    'password': '1234',
 	    'doorids': req.body.doorids,
-	    'LockStatus': 'Unlocked'
+	    'LockStatus': 'Unlocked',
+	    'duration': req.body.duration
+	  }
+	};
+	request(options, function (error, response) { 
+	  if (error) throw new Error(error);
+	  send(res, JSON.parse(response.body));
+	});
+	
+});
+
+// Close a Single Door
+router.put('/doors/close', function (req, res, next) {
+	console.log('Closing Door '+req.params.ids);
+	var options = {
+	  'method': 'PUT',
+	  'url': 'http://10.10.3.31:18779/Infinias/IA/Doors',
+	  'headers': {
+	    'Content-Type': 'application/x-www-form-urlencoded'
+	  },
+	  form: {
+	    'username': 'dispatch1',
+	    'password': '1234',
+	    'doorids': req.params.doorids,
+	    'LockStatus': 'Normal'
 	  }
 	};
 	request(options, function (error, response) { 
