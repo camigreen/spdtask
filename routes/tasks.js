@@ -1,22 +1,21 @@
 var express = require('express');
 var router = express.Router();
-var http = require('http');
 var request = require('request');
 
 var host = '10.10.3.31';
 var port = '18779';
 var username = 'dispatch1';
 var password = '1234'
+  
 
-function send(res, data) {
+router.use(function(req, res, next) {
+	res.setHeader("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
 	res.setHeader("Access-Control-Allow-Origin", "*");
+	res.setHeader("Access-Control-Allow-Headers", "*");
 	res.setHeader("Cache-Control", "no-cache");
-	res.send(data);
-}
+	next();
+})
 
-router.get('/tasks', function (req, res, next) {
-	res.send('TASK API');
-});
 
 router.get('/doors', function (req, res, next) {
 
@@ -29,7 +28,7 @@ router.get('/doors', function (req, res, next) {
 	};
 	request(options, function (error, response) { 
 		if (error) throw new Error(error);
-		send(res,  JSON.parse(response.body));
+		res.send(JSON.parse(response.body));
 	});
 	
 	
@@ -48,14 +47,13 @@ router.get('/doors/:id', function (req, res, next) {
 	};
 	request(options, function (error, response) { 
 	  if (error) throw new Error(error);
-	  send(res, JSON.parse(response.body));
+	  res.send(JSON.parse(response.body));
 	});
 	
 });
 
 // Open a Single Door or multiple doors
 router.put('/doors/unlock', function (req, res, next) {
-	console.log(req.body);
 	var options = {
 	  'method': 'PUT',
 	  'url': 'http://10.10.3.31:18779/Infinias/IA/Doors',
@@ -72,14 +70,15 @@ router.put('/doors/unlock', function (req, res, next) {
 	};
 	request(options, function (error, response) { 
 	  if (error) throw new Error(error);
-	  send(res, JSON.parse(response.body));
+	  res.send(JSON.parse(response.body));
 	});
 	
 });
 
+
+
 // Close a Single Door or multiple doors
 router.put('/doors/lock', function (req, res, next) {
-	console.log(req.body);
 	var options = {
 	  'method': 'PUT',
 	  'url': 'http://10.10.3.31:18779/Infinias/IA/Doors',
@@ -95,7 +94,7 @@ router.put('/doors/lock', function (req, res, next) {
 	};
 	request(options, function (error, response) { 
 	  if (error) throw new Error(error);
-	  send(res, JSON.parse(response.body));
+	  res.send(JSON.parse(response.body));
 	});
 	
 });
