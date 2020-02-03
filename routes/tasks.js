@@ -102,7 +102,7 @@ router.get('/doors/:ids/close', function (req, res, next) {
 
 // Unlock a Single Door
 router.put('/doors/unlock', function (req, res, next) {
-	console.log(req.params.doorids);
+	console.log(req.body);
 	var options = {
 	  'method': 'PUT',
 	  'url': 'http://10.10.3.31:18779/Infinias/IA/Doors',
