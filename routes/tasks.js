@@ -112,7 +112,7 @@ router.put('/doors/unlock', function (req, res, next) {
 	  form: {
 	    'username': 'dispatch1',
 	    'password': '1234',
-	    'doorids': '16,17',
+	    'doorids': req.params.doorids,
 	    'LockStatus': 'Unlocked'
 	  }
 	};
