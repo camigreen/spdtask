@@ -65,7 +65,7 @@ router.put('/doors/unlock', function (req, res, next) {
 	  form: {
 	    'username': 'dispatch1',
 	    'password': '1234',
-	    'doorids': req.body.doorids,
+	    'doorids': req.body.doorIDs,
 	    'LockStatus': 'Unlocked',
 	    'duration': req.body.duration
 	  }
@@ -89,8 +89,8 @@ router.put('/doors/lock', function (req, res, next) {
 	  form: {
 	    'username': 'dispatch1',
 	    'password': '1234',
-	    'doorids': req.body.doorids,
-	    'LockStatus': 'Normal'
+	    'doorids': req.body.doorIDs,
+	    'LockStatus': req.body.lockStatus
 	  }
 	};
 	request(options, function (error, response) { 
