@@ -54,7 +54,7 @@ router.get('/doors/:id', function (req, res, next) {
 });
 
 // Open a Single Door or multiple doors
-router.put('/doors/open', function (req, res, next) {
+router.put('/doors/unlock', function (req, res, next) {
 	console.log(req.body);
 	var options = {
 	  'method': 'PUT',
@@ -78,7 +78,7 @@ router.put('/doors/open', function (req, res, next) {
 });
 
 // Close a Single Door or multiple doors
-router.put('/doors/close', function (req, res, next) {
+router.put('/doors/lock', function (req, res, next) {
 	console.log(req.body);
 	var options = {
 	  'method': 'PUT',
