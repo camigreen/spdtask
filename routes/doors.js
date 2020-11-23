@@ -19,7 +19,7 @@ router.use(function(req, res, next) {
 })
 
 
-router.get('/doors', function (req, res, next) {
+router.get('/', function (req, res, next) {
 
 	var options = {
 		'method': 'GET',
@@ -38,7 +38,7 @@ router.get('/doors', function (req, res, next) {
 
 
 // Get Single Door
-router.get('/doors/:id', function (req, res, next) {
+router.get(':id', function (req, res, next) {
 	
 	var options = {
 	  	'method': 'GET',
@@ -54,8 +54,31 @@ router.get('/doors/:id', function (req, res, next) {
 	
 });
 
+// Momentarily Open a Single Door
+router.get('/momentary/:id', function (req, res, next) {
+	var options = {
+		'method': 'PUT',
+		'url': 'http://'+settings.host+':'+settings.port+'/Infinias/IA/Doors',
+		'headers': {
+		  'Content-Type': 'application/x-www-form-urlencoded'
+		},
+		form: {
+		  'username': settings.username,
+		  'password': settings.password,
+		  'doorids': req.params.id,
+		  'LockStatus': 'Unlocked',
+		  'duration': 10
+		}
+	  };
+	  request(options, function (error, response) { 
+		if (error) throw new Error(error);
+		res.send(JSON.parse(response.body));
+	  });
+	
+});
+
 // Open a Single Door or multiple doors
-router.put('/doors/unlock', function (req, res, next) {
+router.put('/unlock', function (req, res, next) {
 	var options = {
 	  'method': 'PUT',
 	  'url': 'http://'+settings.host+':'+settings.port+'/Infinias/IA/Doors',
@@ -80,7 +103,7 @@ router.put('/doors/unlock', function (req, res, next) {
 
 
 // Close a Single Door or multiple doors
-router.put('/doors/lock', function (req, res, next) {
+router.put('/lock', function (req, res, next) {
 	var options = {
 	  'method': 'PUT',
 	  'url': 'http://'+settings.host+':'+settings.port+'/Infinias/IA/Doors',
@@ -98,6 +121,23 @@ router.put('/doors/lock', function (req, res, next) {
 	  if (error) throw new Error(error);
 	  res.send(JSON.parse(response.body));
 	});
+	
+});
+
+router.get('/version', function (req, res, next) {
+
+	var options = {
+		'method': 'GET',
+		'url': 'http://'+settings.host+':'+settings.port+'/Infinias/IA/Version?username='+settings.username+'&password='+settings.password,
+		'headers': {
+			'Cache-Control': 'no-cache'
+		}
+	};
+	request(options, function (error, response) { 
+		if (error) throw new Error(error);
+		res.send(JSON.parse(response.body));
+	});
+	
 	
 });
 

@@ -4,8 +4,7 @@
   "description": "SPD Task Server",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
@@ -19,6 +18,7 @@
     "jquery": "^3.4.1",
     "mongojs": "^3.1.0",
     "node-rtsp-stream": "0.0.8",
+    "ping": "^0.2.3",
     "request": "^2.88.0",
     "xml2js": "^0.4.23"
   },

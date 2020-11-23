@@ -5,5 +5,17 @@
 	</head>
 	<body>
 		<h1>Hello World</h1>
+		<canvas id="canvas1" style="width:400px"></canvas>
+		<canvas id="canvas2" style="width:400px"></canvas>
+		<canvas id="canvas3" style="width:400px"></canvas>
 	</body>
+	<script type="text/javascript" src="http://localhost:3000/jsmpeg-master/jsmpeg.min.js"></script>
+<script type="text/javascript">
+	player1 = new JSMpeg.Player('ws://localhost:9999', {
+	  canvas: document.getElementById('canvas1') // Canvas should be a canvas DOM element
+	})	
+	player2 = new JSMpeg.Player('ws://localhost:9997', {
+	  canvas: document.getElementById('canvas2') // Canvas should be a canvas DOM element
+	})
+</script>
 </html>
