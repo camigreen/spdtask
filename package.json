@@ -20,6 +20,7 @@
     "node-rtsp-stream": "0.0.8",
     "ping": "^0.2.3",
     "request": "^2.88.0",
+    "websocket": "^1.0.34",
     "xml2js": "^0.4.23"
   },
   "devDependencies": {},

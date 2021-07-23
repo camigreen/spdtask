@@ -4,9 +4,10 @@ var bodyParser = require('body-parser');
 var index = require('./routes/index');
 var jail = require('./routes/jail');
 var doors = require('./routes/doors');
+var status = require('./routes/status');
 const Websocket = require('ws');
 
-var cams = true;
+var cams = false;
 
 var port = 3000;
 
@@ -24,9 +25,10 @@ app.use(express.static(path.join(__dirname, 'client')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
-app.use('/', index);
+app.use('/', status);
 app.use('/api/doors', doors);
 app.use('/api/jail', jail);
+app.use('/api/status',status);
 
 app.listen(port, function () {
 	console.log('Server Started on Port '+ port);
@@ -58,13 +60,3 @@ streams.push(new Stream({
 
 
 }
-
-// var ping = require('ping');
- 
-// var hosts = ['10.10.3.40'];
-// hosts.forEach(function(host){
-//     ping.sys.probe(host, function(isAlive){
-//         var msg = isAlive ? 'host ' + host + ' is alive' : 'host ' + host + ' is dead';
-//         console.log(msg);
-//     });
-// });
